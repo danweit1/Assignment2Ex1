@@ -1,5 +1,9 @@
 package Ex1;
 
-public class Truck {
+public class Truck extends Wehicle{
 
+	private int id = 2;
+	public Truck() {
+		
+	}
 }

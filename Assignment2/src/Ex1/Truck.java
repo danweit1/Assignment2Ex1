@@ -1,9 +1,17 @@
 package Ex1;
 
-public class Truck extends Wehicle{
+public class Truck extends Vehicle implements Runnable {
 
-	private int id = 2;
-	public Truck() {
-		
+	private String type;
+	
+	public Truck(VehicleWasher carWash) {
+		super(carWash);
+		this.type = "Truck";
 	}
+	
+	public String getType() {
+		return this.type;
+	}
+	
+
 }

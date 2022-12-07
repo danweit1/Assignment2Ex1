@@ -1,11 +1,18 @@
 package Ex1;
 
-public class MiniBus extends Wehicle {
+public class MiniBus extends Vehicle implements Runnable {
 	
-	private int id = 3;
+	private String type;
 	
-	public MiniBus() {
-		
+	public MiniBus(VehicleWasher carWash) {
+		super(carWash);
+		this.type = "Mini Bus";
 	}
+	
+	public String getType() {
+		return this.type;
+	}
+
+
 
 }

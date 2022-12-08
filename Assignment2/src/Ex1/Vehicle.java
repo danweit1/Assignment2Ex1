@@ -1,12 +1,13 @@
 package Ex1;
 
+import java.io.IOException;
 import java.util.Random;
 
 public abstract class Vehicle extends Thread implements Runnable {
 
 	private VehicleWasher carWash;
 	private int id;
-	public static int counter = 0;
+	private String type;
 	
 	public Vehicle(VehicleWasher carWash) {
 		this.carWash = carWash;
@@ -17,10 +18,6 @@ public abstract class Vehicle extends Thread implements Runnable {
 	
 	public int getID() {
 		return this.id;
-	}
-	
-	public synchronized void addCount() {
-		this.counter++;
 	}
 	
 	public synchronized void addId() {
@@ -34,9 +31,9 @@ public abstract class Vehicle extends Thread implements Runnable {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		carWash.addToWait(this);
 		
 		try {
+			carWash.addToWait(this);
 			carWash.addToWash(this);
 			carWash.removeFromWait();
 			double washTime = (((-Math.log(Math.random())) / 3) * 1000);
@@ -44,8 +41,9 @@ public abstract class Vehicle extends Thread implements Runnable {
 			carWash.finishWash(this);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		carWash.sortByType(this);
-		this.addCount();		
+		carWash.sortByType(this);		
 	}
 }

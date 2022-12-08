@@ -1,0 +1,63 @@
+
+A Car, id: 4215944 is waiting.. 
+The Car, id: 4215944 has entered the car wash
+An SUV, id: 68190 is waiting.. 
+The SUV, id: 68190 has entered the car wash
+A Truck, id: 3528576 is waiting.. 
+The Truck, id: 3528576 has entered the car wash
+An SUV, id: 3607228 is waiting.. 
+The SUV, id: 3607228 has entered the car wash
+The Car, id: 4215944 is clean and leaving the facility.
+A Car, id: 7914263 is waiting.. 
+The Car, id: 7914263 has entered the car wash
+An SUV, id: 1442087 is waiting.. 
+The SUV, id: 1442087 has entered the car wash
+The SUV, id: 3607228 is clean and leaving the facility.
+A Mini Bus, id: 5153416 is waiting.. 
+The Mini Bus, id: 5153416 has entered the car wash
+The Mini Bus, id: 5153416 is clean and leaving the facility.
+A Mini Bus, id: 8952397 is waiting.. 
+The Mini Bus, id: 8952397 has entered the car wash
+A Truck, id: 8814866 is waiting.. 
+The Truck, id: 8814866 has entered the car wash
+The Car, id: 7914263 is clean and leaving the facility.
+The SUV, id: 1442087 is clean and leaving the facility.
+The Mini Bus, id: 8952397 is clean and leaving the facility.
+The Truck, id: 8814866 is clean and leaving the facility.
+An SUV, id: 5081263 is waiting.. 
+The SUV, id: 5081263 has entered the car wash
+An SUV, id: 1303960 is waiting.. 
+The SUV, id: 1303960 has entered the car wash
+An SUV, id: 5763555 is waiting.. 
+The SUV, id: 5763555 has entered the car wash
+A Mini Bus, id: 5367615 is waiting.. 
+The Mini Bus, id: 5367615 has entered the car wash
+The Truck, id: 3528576 is clean and leaving the facility.
+An SUV, id: 255039 is waiting.. 
+The SUV, id: 255039 has entered the car wash
+The SUV, id: 5081263 is clean and leaving the facility.
+An SUV, id: 5862948 is waiting.. 
+The SUV, id: 5862948 has entered the car wash
+The Mini Bus, id: 5367615 is clean and leaving the facility.
+The SUV, id: 5763555 is clean and leaving the facility.
+The SUV, id: 1303960 is clean and leaving the facility.
+The SUV, id: 255039 is clean and leaving the facility.
+The SUV, id: 5862948 is clean and leaving the facility.
+The SUV, id: 68190 is clean and leaving the facility.
+
+SUV list: | id: 3607228, SUV || id: 1442087, SUV || id: 5081263, SUV || id: 5763555, SUV || id: 1303960, SUV || id: 255039, SUV || id: 5862948, SUV || id: 68190, SUV |
+Average waiting time for SUV's: 0.19
+Truck list: 
+| id: 8814866, Truck |
+| id: 3528576, Truck |
+Average waiting time for trucks: 0.77
+Mini Bus list: 
+| id: 5153416, Mini Bus |
+| id: 8952397, Mini Bus |
+| id: 5367615, Mini Bus |
+Average waiting time for mini buses: 0.52
+Car list: 
+| id: 4215944, Car |
+| id: 7914263, Car |
+Average waiting time for cars: 0.77
+Total time for the facility: 1.55

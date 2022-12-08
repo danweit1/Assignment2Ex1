@@ -9,21 +9,24 @@ public class VehicleLogger {
 	private FileReader fileRead = null;
 	private BufferedReader read = null;
 	
-	
-	public VehicleLogger() {
-		
-	}
-	
-	public void write() throws IOException {
+
+	public VehicleLogger() throws IOException {
 		try {
 			fileWrite = new FileWriter("log.txt");
 			write = new PrintWriter(fileWrite);
-			
+			fileRead = new FileReader("log.txt");
+			read = new BufferedReader(fileRead);
+		} catch (IOException e) {
+			System.out.print(e);
+		}
+		
+	}
+	
+	public void write(String str) throws IOException {
+		try {
+			write.write(str);
 		} catch (Exception e) {
 			System.out.println(e);
-		} finally {
-			fileWrite.close();
-			write.close();
 		}
 	}
 	
@@ -31,19 +34,21 @@ public class VehicleLogger {
 		String content = "";
 		String str = "";
 		try {
-			fileRead = new FileReader("log.txt");
-			read = new BufferedReader(fileRead);
 			while ((str = read.readLine()) != null) {
 				content += str;
 				content += "\n";
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-		} finally {
-			fileWrite.close();
-			write.close();
-		}
+		} 
 		return content;
 	}
 	
+	public void closeLog() throws IOException {
+		this.fileWrite.close();
+		this.write.close();
+		this.fileRead.close();
+		this.read.close();
+	}
+
 }

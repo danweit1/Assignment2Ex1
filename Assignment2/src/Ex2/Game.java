@@ -6,6 +6,7 @@ public abstract class Game {
 	private boolean turn;
 	private int counter = 0;
 	private int whoWon;
+	private boolean waitForTurn = false;
 	
 	public Game() {
 		this.initializeBoard();
@@ -45,7 +46,16 @@ public abstract class Game {
 		}
 	}
 
-	public boolean isEmpty(int a, int b) {
+	public synchronized boolean isEmpty(int a, int b) {
+		while (this.waitForTurn) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				System.out.println(e);
+			}
+			this.waitForTurn = true;
+			notify();
+		}
 		if (this.gameBoard[a][b].equals("  ")) {
 			return true;
 		} else {
@@ -53,7 +63,16 @@ public abstract class Game {
 		}
 	}
 	
-	public void setXO(int a, int b, boolean turn) {
+	public synchronized void setXO(int a, int b, boolean turn) {
+		while (this.waitForTurn) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				System.out.println(e);
+			}
+			this.waitForTurn = true;
+			notify();
+		}
 		this.counter++;
 		if (turn == true) {
 			this.gameBoard[a][b] = " O";
@@ -62,7 +81,16 @@ public abstract class Game {
 		}
 	}
 	
-	public boolean isGameOver() {
+	public synchronized boolean isGameOver() {
+		while (this.waitForTurn) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				System.out.println(e);
+			}
+			this.waitForTurn = true;
+			notify();
+		}
 		int count = 0;
 		if (this.counter == 9) {
 			return true;
@@ -154,15 +182,15 @@ public abstract class Game {
 		
 	}
 	
-	public int getWhoWon() {
+	public synchronized int getWhoWon() {
 		return this.whoWon;
 	}
 	
-	public void setPlayerType(boolean turn) { // true = O, false = X
+	public synchronized void setPlayerType(boolean turn) { // true = O, false = X
 		this.turn = turn;
 	}
 	
-	public boolean getTurn() {
+	public synchronized boolean getTurn() {
 		return this.turn;
 	}
 }

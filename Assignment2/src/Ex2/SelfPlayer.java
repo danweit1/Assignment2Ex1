@@ -13,14 +13,6 @@ public class SelfPlayer extends Player implements Runnable {
 	
 	public void run() {
 		this.game.printBoard();
-		while (!this.getMyTurn()) {
-			try {
-				this.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		this.notify();
 		if (this.game.isGameOver()) {
 			if (this.game.getWhoWon() == 1) {
 				System.out.println("p1 has won!");
@@ -29,7 +21,6 @@ public class SelfPlayer extends Player implements Runnable {
 			} else {
 				System.out.println("It's a tie.");
 			}
-		this.interrupt();	
 		} else {
 			Random rand = new Random();
 			int randNum = rand.nextInt(3);
@@ -39,7 +30,6 @@ public class SelfPlayer extends Player implements Runnable {
 				randNum2 = rand.nextInt(3);
 			}
 			this.game.setXO(randNum, randNum2, this.getTurn());
-			this.setMyTurn(false);
 		}
 	}
 }

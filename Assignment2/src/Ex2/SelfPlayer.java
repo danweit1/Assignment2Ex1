@@ -6,22 +6,15 @@ public class SelfPlayer extends Player implements Runnable {
 
 	private SelfGame game;
 	
-	public SelfPlayer(boolean turn, String str) {
+	public SelfPlayer(boolean turn, String str, SelfGame game) {
 		super(turn, str);
-		this.game = new SelfGame();
+		this.game = game;
 	}
 	
 	public void run() {
-		this.game.printBoard();
-		if (this.game.isGameOver()) {
-			if (this.game.getWhoWon() == 1) {
-				System.out.println("p1 has won!");
-			} else if (this.game.getWhoWon() == 2) {
-				System.out.println("p2 has won!");
-			} else {
-				System.out.println("It's a tie.");
-			}
-		} else {
+		while (!this.game.isGameOver()) {
+			this.game.checkTurn(this);
+			this.game.printBoard();
 			Random rand = new Random();
 			int randNum = rand.nextInt(3);
 			int randNum2 = rand.nextInt(3);
@@ -29,7 +22,7 @@ public class SelfPlayer extends Player implements Runnable {
 				randNum = rand.nextInt(3);
 				randNum2 = rand.nextInt(3);
 			}
-			this.game.setXO(randNum, randNum2, this.getTurn());
+			this.game.setXO(randNum, randNum2, this);
 		}
 	}
 }

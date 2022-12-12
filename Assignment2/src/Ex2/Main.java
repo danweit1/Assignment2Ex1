@@ -2,20 +2,23 @@ package Ex2;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
-		SelfPlayer p1 = new SelfPlayer(true, "p1"); // plays O
-		SelfPlayer p2 = new SelfPlayer(false, "p2"); // plays X
 		
 		SelfGame game = new SelfGame();
 		
-		game.printBoard();
+		
+		SelfPlayer p1 = new SelfPlayer(true, "p1", game); // plays O
+		SelfPlayer p2 = new SelfPlayer(false, "p2", game); // plays X
 		
 		p1.start();
 		p2.start();
 		
-		//game.gameStart();
+		p1.join();
+		p2.join();
 		
+		game.declareWinner();
+
 		
 	}
 

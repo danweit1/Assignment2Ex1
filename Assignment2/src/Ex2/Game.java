@@ -4,9 +4,8 @@ public abstract class Game {
 
 	private String[][] gameBoard;
 	private boolean turn;
-	private int counter = 0;
-	private int whoWon;
-	private boolean waitForTurn = false;
+
+	
 	
 	public Game() {
 		this.initializeBoard();
@@ -21,7 +20,11 @@ public abstract class Game {
 		}
 	}
 	
-	public void printBoard() {
+	public String[][] getBoard() {
+		return this.gameBoard;
+	}
+	
+	public synchronized void printBoard() {
 	    System.out.println("   1    2   3");
 	    System.out.println("A  " + gameBoard[0][0] + "| " + gameBoard[0][1] + " | " + gameBoard[0][2]);  
 	    System.out.println("  ------------");
@@ -46,145 +49,7 @@ public abstract class Game {
 		}
 	}
 
-	public synchronized boolean isEmpty(int a, int b) {
-		while (this.waitForTurn) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.out.println(e);
-			}
-			this.waitForTurn = true;
-			notify();
-		}
-		if (this.gameBoard[a][b].equals("  ")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
-	public synchronized void setXO(int a, int b, boolean turn) {
-		while (this.waitForTurn) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.out.println(e);
-			}
-			this.waitForTurn = true;
-			notify();
-		}
-		this.counter++;
-		if (turn == true) {
-			this.gameBoard[a][b] = " O";
-		} else {
-			this.gameBoard[a][b] = " X";
-		}
-	}
-	
-	public synchronized boolean isGameOver() {
-		while (this.waitForTurn) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				System.out.println(e);
-			}
-			this.waitForTurn = true;
-			notify();
-		}
-		int count = 0;
-		if (this.counter == 9) {
-			return true;
-		} else if (counter >= 3) {
-			String temp = "";
-			for (int i = 0; i < 3; i++) {
-				temp = this.gameBoard[i][0];
-				for (int j = 0; j < 3; j++) {
-					if (temp.equals(this.gameBoard[i][j])) {
-						count++;
-					}
-				}
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				} else {
-					count = 0;
-				}
-			}
-			for (int i = 0; i < 3; i++) {
-				temp = this.gameBoard[0][i];
-				for (int j = 0; j < 3; j++) {
-					if (temp.equals(this.gameBoard[j][i])) {
-						count++;
-					}
-				}
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				} else {
-					count = 0;
-				}
-			}
-			temp = this.gameBoard[0][0];
-			for (int i = 0; i < 3; i++) {
-				if (temp.equals(this.gameBoard[i][i])) {
-					count++;
-				}
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				}
-			}
-			int indexI = 0, indexJ = 2;
-			temp = this.gameBoard[0][2];
-			for (int i = 0; i < 3; i++) {	
-				if (temp.equals(this.gameBoard[indexI][indexJ])) {
-					count++;
-				}
-				indexJ--;
-				indexI++;
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				}
-			}
-			return false;
-		} else {
-			return false;
-		}
-		
-	}
-	
-	public synchronized int getWhoWon() {
-		return this.whoWon;
-	}
 	
 	public synchronized void setPlayerType(boolean turn) { // true = O, false = X
 		this.turn = turn;

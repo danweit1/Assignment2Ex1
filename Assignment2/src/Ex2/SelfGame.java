@@ -23,17 +23,7 @@ public class SelfGame extends Game {
 					this.waitForTurn = true;
 					notify();
 			}
-		} else {
-			while (this.waitForTurn) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					System.out.println(e);
-				}
-			}
-				this.waitForTurn = true;
-				notify();
-		}
+		} 
 	}
 
 	public synchronized boolean isEmpty(int a, int b) {		
@@ -45,22 +35,57 @@ public class SelfGame extends Game {
 	}
 	
 	public synchronized void setXO(int a, int b, SelfPlayer p) {
-		this.counter++;
 		if (p.getTurn() == true) {
+			this.addCounter();
 			this.getBoard()[a][b] = " O";
+			while (this.waitForTurn) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					System.out.println(e);
+				}
+			}
+				this.waitForTurn = true;
+				notify();
 		} else {
+			this.addCounter();
 			this.getBoard()[a][b] = " X";
+			while (!this.waitForTurn) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					System.out.println(e);
+				}
+			}
+				this.waitForTurn = false;
+				notify();
 		}
 	}
 	
 	public synchronized boolean isGameOver() {
 		int count = 0;
-		if (this.counter == 9) {
-			return true;
-		} else if (counter >= 3) {
-			String temp = "";
+		if (counter >= 3) {
+			if (this.getBoard()[0][0].equals(this.getBoard()[1][1]) &&
+					this.getBoard()[0][0].equals(this.getBoard()[2][2])) {
+				if (this.getBoard()[0][0].equals(" O")) {
+					this.whoWon = 1;
+				} else if (this.getBoard()[0][0].equals(" X")) {
+					this.whoWon = 2;
+				} 
+				return true;
+			}
+			
+			if (this.getBoard()[0][2].equals(this.getBoard()[1][1]) &&
+					this.getBoard()[0][2].equals(this.getBoard()[2][0])) {
+				if (this.getBoard()[0][2].equals(" O")) {
+					this.whoWon = 1;
+				} else if (this.getBoard()[0][2].equals(" X")) {
+					this.whoWon = 2;
+				} 
+				return true;
+			}
 			for (int i = 0; i < 3; i++) {
-				temp = this.getBoard()[i][0];
+				String temp = this.getBoard()[i][0];
 				for (int j = 0; j < 3; j++) {
 					if (temp.equals(this.getBoard()[i][j])) {
 						count++;
@@ -76,12 +101,11 @@ public class SelfGame extends Game {
 					} else if (temp.equals("  ")) {
 						count = 0;
 					}
-				} else {
-					count = 0;
 				}
+				count = 0;
 			}
 			for (int i = 0; i < 3; i++) {
-				temp = this.getBoard()[0][i];
+				String temp = this.getBoard()[0][i];
 				for (int j = 0; j < 3; j++) {
 					if (temp.equals(this.getBoard()[j][i])) {
 						count++;
@@ -97,52 +121,18 @@ public class SelfGame extends Game {
 					} else if (temp.equals("  ")) {
 						count = 0;
 					}
-				} else {
-					count = 0;
 				}
+				count = 0;
 			}
-			temp = this.getBoard()[0][0];
-			for (int i = 0; i < 3; i++) {
-				if (temp.equals(this.getBoard()[i][i])) {
-					count++;
-				}
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				}
-			}
-			int indexI = 0, indexJ = 2;
-			temp = this.getBoard()[0][2];
-			for (int i = 0; i < 3; i++) {	
-				if (temp.equals(this.getBoard()[indexI][indexJ])) {
-					count++;
-				}
-				indexJ--;
-				indexI++;
-				if (count == 3) {
-					if (temp.equals(" O")) {
-						this.whoWon = 1;
-						return true;
-					} else if (temp.equals(" X")) {
-						this.whoWon = 2;
-						return true;
-					} else if (temp.equals("  ")) {
-						count = 0;
-					}
-				}
+			if (counter == 9) {
+				return false;
 			}
 			return false;
 		} else {
 			return false;
 		}
 	}
+
 	
 	public void declareWinner() {
 		if (this.getWhoWon() == 1) {
@@ -152,6 +142,10 @@ public class SelfGame extends Game {
 		} else {
 			System.out.println("It's a tie.");
 		}
+	}
+	
+	public synchronized void addCounter() {
+		this.counter++;
 	}
 	
 	public synchronized int getWhoWon() {

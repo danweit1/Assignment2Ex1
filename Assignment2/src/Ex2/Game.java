@@ -6,7 +6,6 @@ public abstract class Game {
 	private boolean turn;
 
 	
-	
 	public Game() {
 		this.initializeBoard();
 	}
@@ -30,7 +29,8 @@ public abstract class Game {
 	    System.out.println("  ------------");
 	    System.out.println("B  " + gameBoard[1][0] + "| " + gameBoard[1][1] + " | " + gameBoard[1][2]);  
 	    System.out.println("  ------------");
-	    System.out.println("C  " + gameBoard[2][0] + "| " + gameBoard[2][1] + " | " + gameBoard[2][2]); 
+	    System.out.println("C  " + gameBoard[2][0] + "| " + gameBoard[2][1] + " | " + gameBoard[2][2]);
+	    System.out.println();
 	}
 	
 	public void getFreeCells() {
@@ -49,8 +49,6 @@ public abstract class Game {
 		}
 	}
 
-	
-	
 	public synchronized void setPlayerType(boolean turn) { // true = O, false = X
 		this.turn = turn;
 	}
